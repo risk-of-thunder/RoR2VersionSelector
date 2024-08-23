@@ -51,19 +51,6 @@ namespace RoR2VersionSelector
 
         private void RoR2VersionSelector_Load(object sender, EventArgs e)
         {
-            new Thread(() =>
-            {
-                while (true)
-                {
-                    ButtonCopyDownloadedVersionToSteamInstall.InvokeIfRequired((ctrl) =>
-                    {
-                        ctrl.Enabled = IsValidDownloadedDepot("./depots");
-                    });
-
-                    Thread.Sleep(3000);
-                }
-            }).Start();
-
             AllRoR2VersionsStringSorted = Enum.GetNames(typeof(RoR2Versions));
             Array.Sort(AllRoR2VersionsStringSorted);
             ComboBoxVersionSelector.DataSource = AllRoR2VersionsStringSorted;

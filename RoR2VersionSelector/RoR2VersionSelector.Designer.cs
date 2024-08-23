@@ -32,13 +32,13 @@ namespace RoR2VersionSelector
             this.TextBoxDepotDownloaderResult = new System.Windows.Forms.TextBox();
             this.PanelMain = new System.Windows.Forms.Panel();
             this.GroupBoxMain = new System.Windows.Forms.GroupBox();
+            this.CheckBoxDownloadOnlyDLLFiles = new System.Windows.Forms.CheckBox();
             this.ButtonCopyDownloadedVersionToSteamInstall = new System.Windows.Forms.Button();
             this.TextBoxPassword = new System.Windows.Forms.TextBox();
             this.LabelPassword = new System.Windows.Forms.Label();
             this.TextBoxUsername = new System.Windows.Forms.TextBox();
             this.LabelUsername = new System.Windows.Forms.Label();
             this.ComboBoxVersionSelector = new System.Windows.Forms.ComboBox();
-            this.CheckBoxDownloadOnlyDLLFiles = new System.Windows.Forms.CheckBox();
             this.PanelMain.SuspendLayout();
             this.GroupBoxMain.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +94,17 @@ namespace RoR2VersionSelector
             this.GroupBoxMain.TabStop = false;
             this.GroupBoxMain.Text = "Version Selection";
             // 
+            // CheckBoxDownloadOnlyDLLFiles
+            // 
+            this.CheckBoxDownloadOnlyDLLFiles.Location = new System.Drawing.Point(316, 155);
+            this.CheckBoxDownloadOnlyDLLFiles.Name = "CheckBoxDownloadOnlyDLLFiles";
+            this.CheckBoxDownloadOnlyDLLFiles.Size = new System.Drawing.Size(161, 18);
+            this.CheckBoxDownloadOnlyDLLFiles.TabIndex = 3;
+            this.CheckBoxDownloadOnlyDLLFiles.Text = "Download Only DLL Files";
+            this.CheckBoxDownloadOnlyDLLFiles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CheckBoxDownloadOnlyDLLFiles.UseVisualStyleBackColor = true;
+            this.CheckBoxDownloadOnlyDLLFiles.CheckedChanged += new System.EventHandler(this.CheckBoxDownloadOnlyDLLFiles_CheckedChanged);
+            // 
             // ButtonCopyDownloadedVersionToSteamInstall
             // 
             this.ButtonCopyDownloadedVersionToSteamInstall.AutoSize = true;
@@ -113,6 +124,7 @@ namespace RoR2VersionSelector
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(794, 20);
             this.TextBoxPassword.TabIndex = 2;
+            this.TextBoxPassword.TextChanged += new System.EventHandler(this.TextBoxPassword_TextChanged);
             // 
             // LabelPassword
             // 
@@ -131,6 +143,7 @@ namespace RoR2VersionSelector
             this.TextBoxUsername.Name = "TextBoxUsername";
             this.TextBoxUsername.Size = new System.Drawing.Size(794, 20);
             this.TextBoxUsername.TabIndex = 1;
+            this.TextBoxUsername.TextChanged += new System.EventHandler(this.TextBoxUsername_TextChanged);
             // 
             // LabelUsername
             // 
@@ -150,16 +163,7 @@ namespace RoR2VersionSelector
             this.ComboBoxVersionSelector.Name = "ComboBoxVersionSelector";
             this.ComboBoxVersionSelector.Size = new System.Drawing.Size(794, 21);
             this.ComboBoxVersionSelector.TabIndex = 0;
-            // 
-            // CheckBoxDownloadOnlyDLLFiles
-            // 
-            this.CheckBoxDownloadOnlyDLLFiles.Location = new System.Drawing.Point(316, 155);
-            this.CheckBoxDownloadOnlyDLLFiles.Name = "CheckBoxDownloadOnlyDLLFiles";
-            this.CheckBoxDownloadOnlyDLLFiles.Size = new System.Drawing.Size(161, 18);
-            this.CheckBoxDownloadOnlyDLLFiles.TabIndex = 3;
-            this.CheckBoxDownloadOnlyDLLFiles.Text = "Download Only DLL Files";
-            this.CheckBoxDownloadOnlyDLLFiles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CheckBoxDownloadOnlyDLLFiles.UseVisualStyleBackColor = true;
+            this.ComboBoxVersionSelector.SelectedIndexChanged += new System.EventHandler(this.ComboBoxVersionSelector_SelectedIndexChanged);
             // 
             // RoR2VersionSelector
             // 

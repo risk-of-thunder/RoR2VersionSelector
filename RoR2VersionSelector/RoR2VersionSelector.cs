@@ -17,6 +17,15 @@ namespace RoR2VersionSelector
 
         private string[] AllRoR2VersionsStringSorted;
 
+        private long ManifestId = 0;
+        private string ManifestArg = "";
+
+        private string DepotDownloaderArgs = "";
+
+        private string OutputFolderPathArg = "";
+
+        private string FileListArg = "";
+
         public RoR2VersionSelector()
         {
             InitializeComponent();
@@ -54,15 +63,7 @@ namespace RoR2VersionSelector
             return res;
         }
 
-        private void RoR2VersionSelector_Load(object sender, EventArgs e)
-        {
-            AllRoR2VersionsStringSorted = Enum.GetNames(typeof(RoR2Versions));
-            Array.Sort(AllRoR2VersionsStringSorted);
-            ComboBoxVersionSelector.DataSource = AllRoR2VersionsStringSorted;
-
-            TextBoxDepotDownloaderResult.ReadOnly = true;
-
-            TextBoxDepotDownloaderResult.Text = "Download the version of your choice through the interface above." +
+        private static string TextBoxDepotDownloadResultDefaultText => "Download the version of your choice through the interface above." +
                 Environment.NewLine +
                 "You may need to enter a Steam Guard code for DepotDownloader to download the version correctly." +
                 Environment.NewLine +
@@ -75,49 +76,26 @@ namespace RoR2VersionSelector
                 "A File dialog box will then open, allowing you to select the folder to which the ror2 version just downloaded is to be copied." +
                 Environment.NewLine +
                 "Otherwise, you can find the downloaded depots here: " + Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "depots");
+
+        private void RoR2VersionSelector_Load(object sender, EventArgs e)
+        {
+            AllRoR2VersionsStringSorted = Enum.GetNames(typeof(RoR2Versions));
+            Array.Sort(AllRoR2VersionsStringSorted);
+            ComboBoxVersionSelector.DataSource = AllRoR2VersionsStringSorted;
+
+            TextBoxDepotDownloaderResult.ReadOnly = true;
+
+            UpdateInitialState();
         }
 
         private async void ButtonDownloadDepot_Click(object sender, EventArgs e)
         {
             ButtonDownloadDepot.Enabled = false;
 
-            var allRoR2VersionsStringNotSorted = Enum.GetNames(typeof(RoR2Versions));
-            var ror2Versions = (RoR2Versions[])Enum.GetValues(typeof(RoR2Versions));
-            long manifestId = 0;
-            for (var i = 0; i < AllRoR2VersionsStringSorted.Length; i++)
-            {
-                if (allRoR2VersionsStringNotSorted[i] == AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex])
-                {
-                    manifestId = (long)ror2Versions[i];
-                }
-            }
-
-            var manifestArg = manifestId != -1 ? $" -manifest {manifestId} " : " ";
-            var fileListArg = " ";
-            if (CheckBoxDownloadOnlyDLLFiles.Checked)
-            {
-                var dllOnlyFilePath = "dllonly.txt";
-                fileListArg = $" -filelist {dllOnlyFilePath} ";
-
-                if (!File.Exists(dllOnlyFilePath))
-                {
-                    File.WriteAllText(dllOnlyFilePath, @"regex:.*\.dll$");
-                }
-            }
-
-            var outputfolderPath = Path.Combine("./depots", AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex]);
-
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
-                Arguments = $"/k \".\\DepotDownloader.exe " +
-                $"-app 632360 " +
-                $"-depot 632361 " +
-                $"{manifestArg} " +
-                $"-username {TextBoxUsername.Text} " +
-                $"-password {TextBoxPassword.Text} " +
-                $"{fileListArg} " +
-                $"-dir {outputfolderPath}\"",
+                Arguments = DepotDownloaderArgs,
                 UseShellExecute = true
             };
 
@@ -137,6 +115,42 @@ namespace RoR2VersionSelector
             {
                 ButtonDownloadDepot.Enabled = true;
             }
+        }
+
+        private void UpdateDepotDownloaderArgs()
+        {
+            DepotDownloaderArgs = $"/k \".\\DepotDownloader.exe " +
+                            $"-app 632360 " +
+                            $"-depot 632361 " +
+                            $"{ManifestArg} " +
+                            $"-username {TextBoxUsername.Text} " +
+                            $"-password {TextBoxPassword.Text} " +
+                            $"{FileListArg} " +
+                            $"-dir {OutputFolderPathArg}\"";
+
+            TextBoxDepotDownloaderResult.Text = TextBoxDepotDownloadResultDefaultText;
+            TextBoxDepotDownloaderResult.Text += Environment.NewLine;
+            TextBoxDepotDownloaderResult.Text += Environment.NewLine;
+            TextBoxDepotDownloaderResult.Text += "Args used for DepotDownloader:";
+            TextBoxDepotDownloaderResult.Text += Environment.NewLine;
+            TextBoxDepotDownloaderResult.Text += DepotDownloaderArgs;
+        }
+
+        private void SetManifestIdAndArgAndOuputFolderPathArg()
+        {
+            var allRoR2VersionsStringNotSorted = Enum.GetNames(typeof(RoR2Versions));
+            var ror2Versions = (RoR2Versions[])Enum.GetValues(typeof(RoR2Versions));
+            for (var i = 0; i < AllRoR2VersionsStringSorted.Length; i++)
+            {
+                if (allRoR2VersionsStringNotSorted[i] == AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex])
+                {
+                    ManifestId = (long)ror2Versions[i];
+                }
+            }
+
+            ManifestArg = ManifestId != -1 ? $" -manifest {ManifestId} " : " ";
+
+            OutputFolderPathArg = Path.Combine("./depots", AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex]);
         }
 
         private static void CopyFilesRecursively(string sourcePath, string targetPath)
@@ -221,6 +235,54 @@ namespace RoR2VersionSelector
             {
                 MessageBox.Show("No destination folder selected.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void UpdateInitialState()
+        {
+            SetManifestIdAndArgAndOuputFolderPathArg();
+
+            SetFileListArg();
+
+            UpdateDepotDownloaderArgs();
+        }
+
+        private void ComboBoxVersionSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetManifestIdAndArgAndOuputFolderPathArg();
+
+            UpdateDepotDownloaderArgs();
+        }
+
+        private void CheckBoxDownloadOnlyDLLFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            SetFileListArg();
+
+            UpdateDepotDownloaderArgs();
+        }
+
+        private void SetFileListArg()
+        {
+            FileListArg = " ";
+            if (CheckBoxDownloadOnlyDLLFiles.Checked)
+            {
+                var dllOnlyFilePath = "dllonly.txt";
+                FileListArg = $" -filelist {dllOnlyFilePath} ";
+
+                if (!File.Exists(dllOnlyFilePath))
+                {
+                    File.WriteAllText(dllOnlyFilePath, @"regex:.*\.dll$");
+                }
+            }
+        }
+
+        private void TextBoxUsername_TextChanged(object sender, EventArgs e)
+        {
+            UpdateDepotDownloaderArgs();
+        }
+
+        private void TextBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+            UpdateDepotDownloaderArgs();
         }
     }
 }

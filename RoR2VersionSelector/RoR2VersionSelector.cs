@@ -41,6 +41,11 @@ namespace RoR2VersionSelector
         {
             var res = new List<string>();
 
+            if (!Directory.Exists(rootPath))
+            {
+                return res;
+            }
+
             foreach (var filePath in Directory.EnumerateFiles(rootPath, "Risk of Rain 2.exe", SearchOption.AllDirectories))
             {
                 res.Add(Path.GetDirectoryName(filePath));
@@ -152,14 +157,13 @@ namespace RoR2VersionSelector
             var sourceFolders = GetRiskofRain2Folders("./depots");
             if (sourceFolders.Count <= 0)
             {
-                MessageBox.Show("Folder copy operation invalid.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No depots available to copy.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             using var fileDialog = new FileSelectionDialog(sourceFolders);
             if (fileDialog.ShowDialog() != DialogResult.OK)
             {
-                MessageBox.Show("Folder copy operation invalid (2).", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -215,7 +219,7 @@ namespace RoR2VersionSelector
             }
             else
             {
-                MessageBox.Show("No destination folder selected.", "Operation Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No destination folder selected.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

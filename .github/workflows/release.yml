@@ -18,19 +18,21 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Build 64bit release DLL
+      - name: Build
         shell: bash
         run: |
-          dotnet build --configuration Release /p:PackageOutputPath=./ReleaseOutput /p:OutputPath=./ReleaseOutput
+          dotnet build ./DepotDownloader.sln --configuration Release --property:OutputPath=./ReleaseOutput
           cp ./RoR2VersionSelector/ReleaseOutput/RoR2VersionSelector.exe ./DepotDownloader/ReleaseOutput/RoR2VersionSelector.exe
           mv ./DepotDownloader/ReleaseOutput/ ./build
+
+      - run: Compress-Archive -Path ./build/* -Destination binary.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: binary
           path: |
-            build/*
+            binary.zip
           
       - name: Generate Build Info
         id: var
@@ -94,7 +96,7 @@ jobs:
       - name: Echo build sha256
         id: build_sha
         run: |
-          sha256sum release.zip > sha256.checksum
+          sha256sum binary.zip > sha256.checksum
           echo "build_sha=$(cat sha256.checksum)" >> $GITHUB_OUTPUT
           cat sha256.checksum
 
@@ -121,4 +123,4 @@ jobs:
             ${{ needs.build_nightly.outputs.full_sha }}
             ```
           files: |
-            release.zip
+            binary.zip

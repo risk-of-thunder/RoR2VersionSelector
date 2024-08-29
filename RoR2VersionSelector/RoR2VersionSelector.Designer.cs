@@ -34,8 +34,6 @@ namespace RoR2VersionSelector
             this.GroupBoxMain = new System.Windows.Forms.GroupBox();
             this.CheckBoxDownloadOnlyDLLFiles = new System.Windows.Forms.CheckBox();
             this.ButtonCopyDownloadedVersionToSteamInstall = new System.Windows.Forms.Button();
-            this.TextBoxPassword = new System.Windows.Forms.TextBox();
-            this.LabelPassword = new System.Windows.Forms.Label();
             this.TextBoxUsername = new System.Windows.Forms.TextBox();
             this.LabelUsername = new System.Windows.Forms.Label();
             this.ComboBoxVersionSelector = new System.Windows.Forms.ComboBox();
@@ -47,7 +45,7 @@ namespace RoR2VersionSelector
             // 
             this.ButtonDownloadDepot.AutoSize = true;
             this.ButtonDownloadDepot.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ButtonDownloadDepot.Location = new System.Drawing.Point(3, 103);
+            this.ButtonDownloadDepot.Location = new System.Drawing.Point(3, 70);
             this.ButtonDownloadDepot.Name = "ButtonDownloadDepot";
             this.ButtonDownloadDepot.Size = new System.Drawing.Size(794, 23);
             this.ButtonDownloadDepot.TabIndex = 3;
@@ -81,8 +79,6 @@ namespace RoR2VersionSelector
             this.GroupBoxMain.Controls.Add(this.CheckBoxDownloadOnlyDLLFiles);
             this.GroupBoxMain.Controls.Add(this.ButtonCopyDownloadedVersionToSteamInstall);
             this.GroupBoxMain.Controls.Add(this.ButtonDownloadDepot);
-            this.GroupBoxMain.Controls.Add(this.TextBoxPassword);
-            this.GroupBoxMain.Controls.Add(this.LabelPassword);
             this.GroupBoxMain.Controls.Add(this.TextBoxUsername);
             this.GroupBoxMain.Controls.Add(this.LabelUsername);
             this.GroupBoxMain.Controls.Add(this.ComboBoxVersionSelector);
@@ -109,32 +105,13 @@ namespace RoR2VersionSelector
             // 
             this.ButtonCopyDownloadedVersionToSteamInstall.AutoSize = true;
             this.ButtonCopyDownloadedVersionToSteamInstall.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ButtonCopyDownloadedVersionToSteamInstall.Location = new System.Drawing.Point(3, 126);
+            this.ButtonCopyDownloadedVersionToSteamInstall.Location = new System.Drawing.Point(3, 93);
             this.ButtonCopyDownloadedVersionToSteamInstall.Name = "ButtonCopyDownloadedVersionToSteamInstall";
             this.ButtonCopyDownloadedVersionToSteamInstall.Size = new System.Drawing.Size(794, 23);
             this.ButtonCopyDownloadedVersionToSteamInstall.TabIndex = 4;
             this.ButtonCopyDownloadedVersionToSteamInstall.Text = "Copy Downloaded Version To Steam Install";
             this.ButtonCopyDownloadedVersionToSteamInstall.UseVisualStyleBackColor = true;
             this.ButtonCopyDownloadedVersionToSteamInstall.Click += new System.EventHandler(this.ButtonCopyDownloadedVersionToSteamInstall_Click);
-            // 
-            // TextBoxPassword
-            // 
-            this.TextBoxPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TextBoxPassword.Location = new System.Drawing.Point(3, 83);
-            this.TextBoxPassword.Name = "TextBoxPassword";
-            this.TextBoxPassword.Size = new System.Drawing.Size(794, 20);
-            this.TextBoxPassword.TabIndex = 2;
-            this.TextBoxPassword.TextChanged += new System.EventHandler(this.TextBoxPassword_TextChanged);
-            // 
-            // LabelPassword
-            // 
-            this.LabelPassword.AutoSize = true;
-            this.LabelPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LabelPassword.Location = new System.Drawing.Point(3, 70);
-            this.LabelPassword.Name = "LabelPassword";
-            this.LabelPassword.Size = new System.Drawing.Size(53, 13);
-            this.LabelPassword.TabIndex = 4;
-            this.LabelPassword.Text = "Password";
             // 
             // TextBoxUsername
             // 
@@ -190,9 +167,7 @@ namespace RoR2VersionSelector
         private System.Windows.Forms.ComboBox ComboBoxVersionSelector;
         private System.Windows.Forms.GroupBox GroupBoxMain;
         private System.Windows.Forms.Label LabelUsername;
-        private System.Windows.Forms.Label LabelPassword;
         private System.Windows.Forms.TextBox TextBoxUsername;
-        private System.Windows.Forms.TextBox TextBoxPassword;
         private System.Windows.Forms.Button ButtonCopyDownloadedVersionToSteamInstall;
         private System.Windows.Forms.CheckBox CheckBoxDownloadOnlyDLLFiles;
     }

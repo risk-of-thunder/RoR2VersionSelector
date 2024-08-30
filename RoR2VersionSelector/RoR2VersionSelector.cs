@@ -128,7 +128,7 @@ namespace RoR2VersionSelector
                             $"{ManifestArg} " +
                             $"-username {TextBoxUsername.Text} " +
                             $"{FileListArg} " +
-                            $"-dir {OutputFolderPathArg}\"";
+                            $"-dir \"{OutputFolderPathArg}\"\"";
 
             TextBoxDepotDownloaderResult.Text = TextBoxDepotDownloadResultDefaultText;
             TextBoxDepotDownloaderResult.Text += Environment.NewLine;

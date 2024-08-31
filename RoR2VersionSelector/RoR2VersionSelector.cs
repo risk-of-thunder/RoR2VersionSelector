@@ -91,9 +91,31 @@ namespace RoR2VersionSelector
             UpdateInitialState();
         }
 
+        private Boolean ValidateInput()
+        {
+            if (TextBoxUsername.Text.Length == 0)
+            {
+                MessageBox.Show("Please specify username.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            if (!Enum.IsDefined(typeof(RoR2Versions), ComboBoxVersionSelector.Text))
+            {
+                MessageBox.Show("Please specify valid version.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
+        }
+
         private async void ButtonDownloadDepot_Click(object sender, EventArgs e)
         {
+            if (!ValidateInput())
+            {
+                return;
+            }
             ButtonDownloadDepot.Enabled = false;
+
 
             var startInfo = new ProcessStartInfo
             {

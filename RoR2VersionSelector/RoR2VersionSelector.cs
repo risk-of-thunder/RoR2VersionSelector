@@ -30,8 +30,10 @@ namespace RoR2VersionSelector
         {
             InitializeComponent();
         }
+        private static string GetDepotDownloaderExeFullPath() =>
+            Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DepotDownloader.exe"));
 
-        private static string GetDepotsFolder() =>
+        private static string GetDepotsFolderFullPath() =>
             Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "depots"));
 
         private bool IsValidDownloadedDepot(string folderName)
@@ -78,7 +80,7 @@ namespace RoR2VersionSelector
                 Environment.NewLine +
                 "A File dialog box will then open, allowing you to select the folder to which the ror2 version just downloaded is to be copied." +
                 Environment.NewLine +
-                "Otherwise, you can find the downloaded depots here: " + GetDepotsFolder();
+                "Otherwise, you can find the downloaded depots here: " + GetDepotsFolderFullPath();
 
         private void RoR2VersionSelector_Load(object sender, EventArgs e)
         {
@@ -144,7 +146,7 @@ namespace RoR2VersionSelector
 
         private void UpdateDepotDownloaderArgs()
         {
-            DepotDownloaderArgs = $"/k \".\\DepotDownloader.exe " +
+            DepotDownloaderArgs = $"/k \"\"{GetDepotDownloaderExeFullPath()}\" " +
                             $"-app 632360 " +
                             $"-depot 632361 " +
                             $"{ManifestArg} " +
@@ -174,7 +176,7 @@ namespace RoR2VersionSelector
 
             ManifestArg = ManifestId != -1 ? $" -manifest {ManifestId} " : " ";
 
-            OutputFolderPathArg = Path.Combine(GetDepotsFolder(), AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex]);
+            OutputFolderPathArg = Path.Combine(GetDepotsFolderFullPath(), AllRoR2VersionsStringSorted[ComboBoxVersionSelector.SelectedIndex]);
         }
 
         private static void CopyFilesRecursively(string sourcePath, string targetPath)
@@ -192,7 +194,7 @@ namespace RoR2VersionSelector
 
         private void ButtonCopyDownloadedVersionToSteamInstall_Click(object sender, EventArgs e)
         {
-            var sourceFolders = GetRiskofRain2Folders(GetDepotsFolder());
+            var sourceFolders = GetRiskofRain2Folders(GetDepotsFolderFullPath());
             if (sourceFolders.Count <= 0)
             {
                 MessageBox.Show("No depots available to copy.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);

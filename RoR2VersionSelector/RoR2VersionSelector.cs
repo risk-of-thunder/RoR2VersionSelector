@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net.NetworkInformation;
+using Alphaleonis.Win32.Filesystem;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RoR2VersionSelector
@@ -43,7 +39,7 @@ namespace RoR2VersionSelector
                 return false;
             }
 
-            foreach (var filePath in Directory.EnumerateFiles(folderName, "Risk of Rain 2.exe", SearchOption.AllDirectories))
+            foreach (var filePath in Directory.EnumerateFiles(folderName, "Risk of Rain 2.exe", System.IO.SearchOption.AllDirectories))
             {
                 return true;
             }
@@ -60,7 +56,7 @@ namespace RoR2VersionSelector
                 return res;
             }
 
-            foreach (var filePath in Directory.EnumerateFiles(rootPath, "Risk of Rain 2.exe", SearchOption.AllDirectories))
+            foreach (var filePath in Directory.EnumerateFiles(rootPath, "Risk of Rain 2.exe", System.IO.SearchOption.AllDirectories))
             {
                 res.Add(Path.GetDirectoryName(filePath));
             }
@@ -181,12 +177,12 @@ namespace RoR2VersionSelector
 
         private static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
-            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", System.IO.SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
             }
 
-            foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", System.IO.SearchOption.AllDirectories))
             {
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }

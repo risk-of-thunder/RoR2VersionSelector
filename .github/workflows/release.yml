@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           dotnet build ./DepotDownloader.sln --configuration Release --property:OutputPath=./ReleaseOutput
-          cp ./RoR2VersionSelector/ReleaseOutput/RoR2VersionSelector.exe ./DepotDownloader/ReleaseOutput/RoR2VersionSelector.exe
+          cp -r ./RoR2VersionSelector/ReleaseOutput/* ./DepotDownloader/ReleaseOutput/
           mv ./DepotDownloader/ReleaseOutput/ ./build
 
       - run: Compress-Archive -Path ./build/* -Destination binary.zip

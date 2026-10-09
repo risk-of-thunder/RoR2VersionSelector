@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RoR2VersionSelector
 {
     internal enum RoR2Versions : long
@@ -54,6 +48,10 @@ namespace RoR2VersionSelector
         V_2025_06_03_Patch_1_3_9_0 = 5882479764777097302,
         V_2025_10_03_Patch_1_3_9_0_Security_Patch = 2195879929166828140,
         V_2025_11_18_DLC_03_AlloyedCollective = 5480330224637699529,
+
+        V_2025_12_09_Patch_1_4_1_0 = 6791510102225396610,
+        V_2026_02_19_Patch_1_4_1_0_SteamdeckControls = 5715419509320521739,
+        V_2026_10_08_DLC_04_HallowedConcepts = 6263328667188910512,
 
         V_Latest = -1
     }
